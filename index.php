@@ -74,8 +74,11 @@ if (is_dir($dir)) {
 
         <!-- gallery images will be niserted inside div#galleryList -->
         <div class="flexbox" id="galleryList"></div>
+
+        <!-- Error if images are not present -->
         <div class="flexbox" id="nogalleryList">
-            <h3>No images found, please visit after some time!</h3>
+            <img src="images/noImages.svg">
+            <h3>No images found, please re-visit after some time!</h3>
         </div>
     </section>
 

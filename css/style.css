@@ -447,6 +447,18 @@ section#intro {
     /* display: none; */
 }
 
+#nogalleryList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#nogalleryList img {
+    width: 300px;
+}
+
 #nogalleryList h3 {
     text-align: center;
     width: 100%;

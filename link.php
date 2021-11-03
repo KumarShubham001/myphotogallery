@@ -3,7 +3,7 @@
 
 <!-- links for css designs -->
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/style.min.css" rel="stylesheet" type="text/css" />
 <link href="./css/style.mobile.css" rel="stylesheet" type="text/css" />
 
 <!-- link for icons -->
