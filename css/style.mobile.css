@@ -1,0 +1,61 @@
+@media only screen and (max-width:767px) {
+    #myKit #camera {
+        width: 170px
+    }
+
+    #myKit #lens1 {
+        width: 110px
+    }
+
+    #myKit #lens2 {
+        width: 105px
+    }
+
+    #myKit #lens3 {
+        width: 80px
+    }
+
+    .slideshow-direction-left {
+        left: 5vw
+    }
+
+    .slideshow-direction-right {
+        right: 5vw
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width:991px) {
+    .slideshow-direction-left {
+        left: 10vw
+    }
+
+    .slideshow-direction-right {
+        right: 10vw
+    }
+}
+
+@media only screen and (min-width:992px) and (max-width:1200px) {
+    #myKit #camera {
+        width: 200px
+    }
+
+    #myKit #lens1 {
+        width: 110px
+    }
+
+    #myKit #lens2 {
+        width: 105px
+    }
+
+    #myKit #lens3 {
+        width: 100px
+    }
+
+    .slideshow-direction-left {
+        left: 15vw
+    }
+
+    .slideshow-direction-right {
+        right: 15vw
+    }
+}

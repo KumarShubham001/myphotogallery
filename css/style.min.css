@@ -1,0 +1,955 @@
+/* 
+Author: Kumar Shubham
+All Rights Reserved
+contact 'kr.shubham997@gmail.com' for legal info
+*/
+
+* {
+    outline: 0;
+    box-sizing: border-box;
+    font-family: Raleway, sans-serif
+}
+
+a,
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none
+}
+
+::-webkit-scrollbar {
+    width: 10px
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555
+}
+
+.no-js #loader {
+    display: none
+}
+
+.js #loader {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0
+}
+
+.se-pre-con {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: url(../images/preloader.gif) center no-repeat #fff
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #232323
+}
+
+.marBot15px {
+    margin-bottom: 15px
+}
+
+.noMar {
+    margin: 0
+}
+
+.floatRight {
+    float: right
+}
+
+.flex {
+    display: flex;
+    flex-direction: row
+}
+
+.flex.col {
+    flex-direction: column
+}
+
+.flex.perfect-center {
+    justify-content: center;
+    align-items: center
+}
+
+.flex.vertical-center {
+    align-items: center
+}
+
+.flex.vertical-start {
+    align-items: flex-start
+}
+
+.flex.vertical-end {
+    align-items: flex-end
+}
+
+.flex.horizontal-center {
+    justify-content: center
+}
+
+.flex.horizontal-start {
+    justify-content: flex-start
+}
+
+.flex.horizontal-end {
+    justify-content: flex-end
+}
+
+.w100 {
+    width: 100%
+}
+
+.h100 {
+    height: 100%
+}
+
+.text-center {
+    text-align: center
+}
+
+.page-overlay {
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(35, 35, 35, .9);
+    z-index: 9999
+}
+
+.overlay-img-loader {
+    color: #fff;
+    font-size: 3rem
+}
+
+.overlay-img {
+    max-height: 100vh;
+    max-width: 100vw
+}
+
+.slash {
+    background: #232323;
+    float: right;
+    margin-right: 30px;
+    width: 70px;
+    display: block;
+    cursor: pointer;
+    display: flex;
+    height: 70px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center
+}
+
+.slash:before {
+    content: "";
+    background: #ababab;
+    width: 2px;
+    height: 50px;
+    transform: rotate(45deg);
+    display: block;
+    transition: .1s background ease-in-out
+}
+
+.slash:after {
+    content: "";
+    background: #ababab;
+    width: 2px;
+    height: 50px;
+    transform: rotate(-45deg);
+    display: block;
+    transition: .1s background ease-in-out
+}
+
+.slash:hover:before {
+    background: #fff;
+    animation: rotateLeft .5s linear .2s
+}
+
+.slash:hover:after {
+    background: #fff;
+    animation: rotateRight .5s linear .2s
+}
+
+@keyframes rotateLeft {
+    0% {
+        transform: rotate(45deg)
+    }
+
+    25% {
+        transform: rotate(75deg)
+    }
+
+    50% {
+        transform: rotate(45deg)
+    }
+
+    75% {
+        transform: rotate(75deg)
+    }
+
+    100% {
+        transform: rotate(45deg)
+    }
+}
+
+@keyframes rotateRight {
+    0% {
+        transform: rotate(-45deg)
+    }
+
+    25% {
+        transform: rotate(-75deg)
+    }
+
+    50% {
+        transform: rotate(-45deg)
+    }
+
+    75% {
+        transform: rotate(-75deg)
+    }
+
+    100% {
+        transform: rotate(-45deg)
+    }
+}
+
+.slideshow-direction {
+    position: absolute;
+    top: calc(50vh - 22px);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: rgba(35, 35, 35, .8)
+}
+
+.slideshow-direction:hover {
+    background: #232323 !important;
+    color: #fff !important;
+    box-shadow: 0 0 5px 6px rgba(0, 0, 0, .2)
+}
+
+.slideshow-direction-left {
+    left: 20vw
+}
+
+.slideshow-direction-right {
+    right: 20vw
+}
+
+.slideshow-direction i {
+    font-size: 32px
+}
+
+.custom-navbar {
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    justify-content: space-between
+}
+
+.custom-navbar.dark-nav {
+    background: #333
+}
+
+.custom-navbar.light-nav {
+    background: 0 0
+}
+
+.custom-navbar-header {
+    display: flex;
+    margin-left: 80px
+}
+
+.custom-navbar-brand {
+    color: #fff;
+    font-size: 17px;
+    letter-spacing: .3px;
+    font-family: 'Homemade Apple', cursive
+}
+
+.custom-navbar-brand:hover {
+    color: #fff
+}
+
+.custom-navbar ul.custom-nav-item {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    margin-right: 80px
+}
+
+.custom-navbar li {
+    position: relative;
+    display: flex
+}
+
+.custom-navbar li a:not(.nav-btn) {
+    position: relative;
+    display: block;
+    padding: 25px 25px 23px 25px;
+    line-height: 20px;
+    color: #ababab;
+    border-bottom: 2px solid transparent
+}
+
+.custom-navbar li a:not(.nav-btn):hover {
+    color: #fff;
+    border-bottom: 2px solid #fff
+}
+
+.custom-navbar li a.nav-btn {
+    position: relative;
+    display: block;
+    line-height: 20px;
+    color: #ababab
+}
+
+.custom-navbar li a.nav-btn:hover {
+    color: #fff
+}
+
+.nav-btn-icon {
+    width: 17px;
+    margin-left: 20px;
+    transition: .2s all
+}
+
+.nav-btn-icon:hover {
+    filter: grayscale(.5)
+}
+
+.parallax-window {
+    height: 450px;
+    background: 0 0
+}
+
+.parallax-window .typo {
+    padding-top: 70px
+}
+
+.parallax-window .typo h1 {
+    color: #fff;
+    font-size: 15em;
+    mix-blend-mode: difference;
+    font-weight: 700
+}
+
+.parallax-window .typo p {
+    color: #fff;
+    font-size: 2em;
+    mix-blend-mode: difference
+}
+
+section#intro {
+    width: 100%
+}
+
+#intro .title {
+    padding-top: 60px;
+    padding-bottom: 20px
+}
+
+#intro div p {
+    width: 75%
+}
+
+#intro div p strong {
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .5px;
+    font-size: 4em;
+    line-height: 75px
+}
+
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%
+}
+
+.image-container {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    position: relative;
+    background: #fff;
+    display: block;
+    outline: 0
+}
+
+.image-container .image {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    backface-visibility: hidden
+}
+
+.image-container .overlay {
+    display: flex;
+    opacity: 0;
+    color: #fff;
+    font-size: 3rem;
+    cursor: pointer;
+    -webkit-transition: .2s opacity ease-in-out;
+    transition: .2s opacity ease-in-out;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to left, #554346, #45505b) !important
+}
+
+.image-container:hover .overlay {
+    opacity: .9
+}
+
+.loadmore-container {
+    padding: 20px
+}
+
+#loadMore {
+    padding: 10px 20px;
+    color: #ababab;
+    border: 2px solid #ababab;
+    border-radius: 3px;
+    outline: 0;
+    cursor: pointer;
+    transition: .3s
+}
+
+#loadMore:hover {
+    color: #fff;
+    border: 2px solid #fff
+}
+
+section#contact {
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 60px
+}
+
+#contact div p {
+    width: 75%
+}
+
+#contact div p strong {
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .5px;
+    font-size: 4em;
+    line-height: 75px
+}
+
+#contact .row {
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+
+#contact input {
+    width: 100%;
+    padding: 10px
+}
+
+#contact textarea {
+    padding: 10px;
+    width: 100%;
+    resize: none
+}
+
+#contact .sendBtn {
+    border: 1px solid #fff;
+    border-radius: 20px;
+    min-width: 130px;
+    color: #ababab;
+    transition: .2s
+}
+
+#contact .sendBtn:hover {
+    background: #fff;
+    color: #333
+}
+
+#myKit {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    padding-bottom: 20px;
+    padding-top: 60px
+}
+
+#myKit .title {
+    padding-bottom: 10px
+}
+
+#myKit .row {
+    margin: auto;
+    width: 80%
+}
+
+#myKit div p {
+    width: 75%
+}
+
+#myKit div p strong {
+    font-weight: 700;
+    letter-spacing: .5px;
+    font-size: 4em;
+    line-height: 75px
+}
+
+#myKit .card {
+    height: 250px
+}
+
+#myKit #camera {
+    width: 210px
+}
+
+#myKit #lens1 {
+    width: 130px
+}
+
+#myKit #lens2 {
+    width: 130px
+}
+
+#myKit #lens3 {
+    width: 100px
+}
+
+footer {
+    padding: 20px 0
+}
+
+.gotoTop {
+    margin-bottom: 40px
+}
+
+.gotoTop .icon-container {
+    width: fit-content;
+    margin: auto;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    transition: .2s all
+}
+
+.gotoTop .icon-container:hover {
+    border: 1px solid #fff
+}
+
+.gotoTop .icon-container svg {
+    font-size: 2em;
+    transition: 2s
+}
+
+.gotoTop p {
+    color: #fff;
+    letter-spacing: .3px;
+    word-spacing: 3px
+}
+
+footer .copy p {
+    color: #ababab;
+    letter-spacing: .3px;
+    word-spacing: 3px;
+    font-size: .8em
+}
+
+footer .copy p a {
+    color: #ababab;
+    text-decoration: underline;
+    text-decoration-style: dotted
+}
+
+footer .copy p a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-style: solid
+}
+
+.heart {
+    fill: red;
+    position: relative;
+    top: 5px;
+    width: 16px;
+    animation: pulse 1s ease infinite
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.15)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
+
+button {
+    outline: 0;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius: 40px;
+    background: #fff;
+    border: 2px solid #1ecd97;
+    color: #1ecd97;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease
+}
+
+button:hover {
+    color: #fff;
+    background: #1ecd97
+}
+
+button:active {
+    letter-spacing: 2px
+}
+
+button:after {
+    content: "SEND"
+}
+
+.onclic {
+    width: 40px;
+    border-color: #bbb;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: #1ecd97;
+    background: 0 0;
+    -webkit-animation: rotating 2s .25s linear infinite;
+    animation: rotating 2s .25s linear infinite
+}
+
+.onclic:after {
+    content: ""
+}
+
+.onclic:hover {
+    color: #1ecd97;
+    background: #fff
+}
+
+.validate {
+    font-size: 13px;
+    color: #fff;
+    background: #1ecd97
+}
+
+.validate:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f00c"
+}
+
+@-webkit-keyframes rotating {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes rotating {
+    from {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .custom-navbar-header {
+        display: flex;
+        margin-left: 30px
+    }
+
+    .custom-navbar ul.custom-nav-item {
+        margin-right: 30px
+    }
+
+    .nav-btn-icon {
+        width: 20px;
+        margin-left: 20px
+    }
+
+    .parallax-window {
+        height: 80vh
+    }
+
+    .parallax-window .typo p {
+        font-size: 1.7em;
+        padding: 0 10px
+    }
+
+    #intro .title {
+        padding-top: 40px
+    }
+
+    #intro div p {
+        width: 90%
+    }
+
+    #intro div p strong {
+        letter-spacing: .3px;
+        font-size: 2em;
+        line-height: 45px
+    }
+
+    .image-container {
+        width: 50%
+    }
+
+    section#contact {
+        padding-top: 40px
+    }
+
+    #contact>div>p {
+        width: 90%
+    }
+
+    #contact div p strong {
+        letter-spacing: .3px;
+        font-size: 2em;
+        line-height: 45px
+    }
+
+    #contact div p {
+        float: none !important;
+        width: 100%
+    }
+
+    #contact .row>div:first-of-type {
+        margin-bottom: 15px
+    }
+
+    #myKit {
+        padding-top: 40px
+    }
+
+    #myKit div {
+        padding-bottom: 10px
+    }
+
+    #myKit div p {
+        width: 90%
+    }
+
+    #myKit div p strong {
+        letter-spacing: .3px;
+        font-size: 2em;
+        line-height: 45px
+    }
+
+    #myKit .card {
+        height: 160px;
+        margin-top: 20px
+    }
+
+    #myKit #camera {
+        width: 200px
+    }
+
+    #myKit #lens1 {
+        width: 120px
+    }
+
+    #myKit #lens2 {
+        width: 100px
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width:1024px) {
+    .custom-navbar-header {
+        display: flex;
+        margin-left: 30px
+    }
+
+    .custom-navbar ul.custom-nav-item {
+        margin-right: 30px
+    }
+
+    .parallax-window {
+        height: 600px
+    }
+
+    .parallax-window .typo h1 {
+        color: #fff;
+        font-size: 18em;
+        mix-blend-mode: difference
+    }
+
+    .parallax-window .typo p {
+        width: 70%;
+        margin-left: 15%
+    }
+
+    #intro div {
+        padding-top: 40px
+    }
+
+    #intro div p {
+        width: 90%
+    }
+
+    #intro div p strong {
+        letter-spacing: .3px;
+        font-size: 3em;
+        line-height: 70px
+    }
+
+    .image-container {
+        width: 33.33333%
+    }
+
+    section#contact {
+        padding-top: 40px
+    }
+
+    #contact>div>p {
+        width: 90%
+    }
+
+    #contact div p strong {
+        letter-spacing: .3px;
+        font-size: 3em;
+        line-height: 70px
+    }
+
+    #contact div p {
+        float: none !important;
+        width: 100%
+    }
+
+    #myKit {
+        padding-top: 40px
+    }
+
+    #myKit .title {
+        padding-bottom: 10px
+    }
+
+    #myKit div p {
+        width: 90%
+    }
+
+    #myKit div p strong {
+        letter-spacing: .3px;
+        font-size: 3em;
+        line-height: 70px
+    }
+
+    #myKit .card {
+        height: 250px
+    }
+
+    #myKit .row {
+        width: 90%
+    }
+
+    #myKit #camera {
+        width: 250px
+    }
+
+    #myKit #lens1 {
+        width: 150px
+    }
+
+    #myKit #lens2 {
+        width: 120px
+    }
+}
+
+@media only screen and (min-width:1920px) {
+    .parallax-window {
+        height: 800px
+    }
+
+    .parallax-window .typo h1 {
+        color: #fff;
+        font-size: 30em;
+        mix-blend-mode: difference
+    }
+
+    #intro .title {
+        padding-bottom: 60px
+    }
+
+    #intro div p strong {
+        letter-spacing: .3px;
+        font-size: 4em;
+        line-height: 70px
+    }
+
+    #contact div p strong {
+        letter-spacing: .3px;
+        font-size: 4em;
+        line-height: 70px
+    }
+
+    #contact div p {
+        float: none !important;
+        width: 100%
+    }
+
+    #myKit div p strong {
+        letter-spacing: .3px;
+        font-size: 4em;
+        line-height: 70px
+    }
+}
