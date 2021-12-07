@@ -66,168 +66,220 @@ $('#file-upload-btn').on('click', function (ev) {
         // If already uploaded image is there, dont re-upload it
         if (imageUploaded != filename) {
 
-            // get the thumbnail image of the original image
+            // get the thumbnail image of the original image then compress it
+            // {
+            //     width: 1200,
+            //     height: 800
+            // }
             $uploadCrop.croppie('result', {
                 type: 'canvas',
-                size: {
+                size: 'original',
+                quality: 1,
+                format: "png",
+            }).then(function (croppedImage) {
+
+                // now compress the cropped image
+                var thumbSize = {
                     width: 600,
                     height: 400
-                }
-            }).then(function (resp) {
-                this.thumb = resp;
+                }, img = new Image();
 
-                // show the cropped preview
-                $('#preview-progress').show();
+                img.src = croppedImage;
 
-                setTimeout(() => {
-                    html = '<img style="height: 100%; width: 100%" src="' + thumb + '" />';
-                    $("#preview").html(html);
-                    $('#preview-progress').hide();
-                    $('#preview-sucess').show();
-                    $('#preview-details').show();
-                    $('#preview-filename').text(String(this.filename));
-
-                    // calculate the size of the thumbnail image
-                    const base64Str = thumb.substr(22);
-                    const decodedStr = atob(base64Str);
-                    $('#preview-size').text(String(readableBytes(decodedStr.length)));
-                }, 500);
-
-                // upload the main image first
-                // start the loader
-                $('#uploading-progress').show();
-                $('#uploading-progress-bar').show();
-
-                // disable the upload button and file upload input
-                $('#file-upload-btn').attr('disabled', true);
-                $('#file-upload').attr('disabled', true);
-
-                // compress the image before uploading it
-                var MIME_TYPE = "image/jpeg"; //image/png, image/webp
-
-                $('#optimizing-progress').show();
-                $('#optimizing-sucess').hide();
-
-                var blobURL = URL.createObjectURL(this.originalImage);
-                var img = new Image();
-                img.src = blobURL;
                 img.onerror = function () {
                     URL.revokeObjectURL(this.src);
-                    // Handle the failure properly
-                    console.log("Cannot load image");
-                    $('#uploading-failed').show();
+                    reject("Cannot load image");
                 };
-                img.onload = function () {
-                    var newWidth = img.width,
-                        newHeight = img.height,
-                        quality = 1 - Number((0.5 / 18918281 * originalImage.size).toFixed(2));
-                    ;
 
+                img.onload = function () {
                     URL.revokeObjectURL(this.src);
 
                     var canvas = document.createElement("canvas");
-                    canvas.width = newWidth;
-                    canvas.height = newHeight;
+                    canvas.width = thumbSize.width;
+                    canvas.height = thumbSize.height;
+
                     var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    ctx.drawImage(img, 0, 0, thumbSize.width, thumbSize.height);
+
                     canvas.toBlob(function (blob) {
-                        // Handle the compressed image. es. upload or save in local state
-                        $('#optimizing-progress').hide();
-                        $('#optimizing-sucess').show();
-                        $('#new-image-size').text(readableBytes(blob.size));
-
-                        this.image = blob;
-
                         var reader = new FileReader();
                         reader.readAsDataURL(blob);
                         reader.onloadend = function () {
-                            this.image = reader.result;
+                            thumb = reader.result;
 
                             // ---------------------------------------------------------------
-                            // now upload the image
+                            // show the cropped image preview
                             // ---------------------------------------------------------------
-                            $.ajax({
-                                url: "ajaxpro.php",
-                                type: "POST",
-                                data: {
-                                    "image": this.image,
-                                    "filename": filename,
-                                    "location": "img"
-                                },
-                                xhr: function () {
-                                    $('#progressBar').attr('value', 0)
-                                    $('#progress-value').text('');
 
-                                    var xhr = new window.XMLHttpRequest();
-                                    xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                            console.log('Uploaded Image: ' + evt.loaded);
+                            $('#preview-progress').show();
 
-                                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            setTimeout(() => {
+                                html = '<img style="height: 100%; width: 100%" src="' + thumb + '" />';
+                                $("#preview").html(html);
+                                $('#preview-progress').hide();
+                                $('#preview-sucess').show();
+                                $('#preview-details').show();
+                                $('#preview-filename').text(String(filename));
 
-                                            // Upload progress bar visibility code here
-                                            $('#progressBar').attr('value', Math.round(percentComplete));
-                                            $('#progress-value').text(Math.round(percentComplete) + "% uploaded (" + String(readableBytes(evt.loaded)) + ")...");
-                                        }
-                                    }, false);
-                                    return xhr;
-                                },
-                                success: function (data) {
-                                    // on success, upload the thumbnail
-                                    $.ajax({
-                                        url: "ajaxpro.php",
-                                        type: "POST",
-                                        data: {
-                                            "image": thumb,
-                                            "filename": filename,
-                                            "location": "thumb"
-                                        },
-                                        xhr: function () {
-                                            $('#progressBar').value = 0;
-                                            $('#progress-value').text('');
+                                // calculate the size of the thumbnail image
+                                const base64Str = thumb.substr(22);
+                                const decodedStr = atob(base64Str);
+                                $('#preview-size').text(String(readableBytes(decodedStr.length)));
+                            }, 500);
 
-                                            var xhr = new window.XMLHttpRequest();
-                                            xhr.upload.addEventListener("progress", function (evt) {
-                                                if (evt.lengthComputable) {
-                                                    console.log('Uploaded thumbnail: ' + evt.loaded);
-
-                                                    var percentComplete = (evt.loaded / evt.total) * 100;
-
-                                                    // Upload progress bar visibility code here
-                                                    $('#progressBar').value = Math.round(percentComplete);
-                                                    $('#progress-value').text(Math.round(percentComplete) + "% uploaded (" + String(readableBytes(evt.loaded)) + ")...");
-                                                }
-                                            }, false);
-                                            return xhr;
-                                        },
-                                        success: function (data) {
-                                            imageUploaded = filename;
-                                            $('#uploading-progress').hide();
-                                            $('#uploading-progress-bar').hide();
-                                            $('#uploading-sucess').show();
-
-                                            // enable the file-upload-button and file input box
-                                            $('#file-upload-btn').attr('disabled', false);
-                                            $('#file-upload').attr('disabled', false);
-                                        }
-                                    });
-                                },
-                                fail: function (xhr, textStatus, errorThrown) {
-                                    $('#uploading-progress').hide();
-                                    $('#uploading-progress-bar').hide();
-
-                                    $('#uploading-failed').show();
-
-                                    // enable the file-upload-button and file input box
-                                    $('#file-upload-btn').attr('disabled', false);
-                                    $('#file-upload').attr('disabled', false);
-                                }
-                            });
                             // ---------------------------------------------------------------
-                        }
+                            // upload the main image first then if it is successful, 
+                            // upload the thumbnail
+                            // ---------------------------------------------------------------
 
-                    }, MIME_TYPE, quality);
-                };
+                            // start the loader
+                            $('#uploading-progress').show();
+                            $('#uploading-progress-bar').show();
+
+                            // disable the upload button and file upload input
+                            $('#file-upload-btn').attr('disabled', true);
+                            $('#file-upload').attr('disabled', true);
+
+                            // compress/optimize the image before uploading it
+                            var MIME_TYPE = "image/jpeg"; //image/png, image/webp
+
+                            $('#optimizing-progress').show();
+                            $('#optimizing-sucess').hide();
+
+                            var blobURL = URL.createObjectURL(originalImage);
+                            var img = new Image();
+                            img.src = blobURL;
+
+                            // Handle the failure properly
+                            img.onerror = function () {
+                                URL.revokeObjectURL(this.src);
+                                console.log("ERR while compressing. Cannot load image.");
+                                $('#uploading-failed').show();
+                            };
+
+                            img.onload = function () {
+                                var newWidth = img.width,
+                                    newHeight = img.height,
+                                    quality = 1 - Number((0.5 / 18918281 * originalImage.size).toFixed(2));
+                                ;
+
+                                URL.revokeObjectURL(this.src);
+
+                                var canvas = document.createElement("canvas");
+                                canvas.width = newWidth;
+                                canvas.height = newHeight;
+                                var ctx = canvas.getContext("2d");
+                                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                                canvas.toBlob(function (blob) {
+                                    // Handle the compressed image. Upload or save it in local state
+                                    $('#optimizing-progress').hide();
+                                    $('#optimizing-sucess').show();
+                                    $('#new-image-size').text(readableBytes(blob.size));
+
+                                    this.image = blob;
+
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(blob);
+                                    reader.onloadend = function () {
+                                        this.image = reader.result;
+
+                                        // ---------------------------------------------------------------
+                                        // now upload the image
+                                        // ---------------------------------------------------------------
+                                        $.ajax({
+                                            url: "ajaxpro.php",
+                                            type: "POST",
+                                            data: {
+                                                "image": this.image,
+                                                "filename": filename,
+                                                "location": "img"
+                                            },
+                                            xhr: function () {
+                                                $('#progressBar').attr('value', 0)
+                                                $('#progress-value').text('');
+
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function (evt) {
+                                                    if (evt.lengthComputable) {
+                                                        console.log('Uploaded Image: ' + evt.loaded);
+
+                                                        var percentComplete = (evt.loaded / evt.total) * 100;
+
+                                                        // Upload progress bar visibility code here
+                                                        $('#progressBar').attr('value', Math.round(percentComplete));
+                                                        $('#progress-value').text(Math.round(percentComplete) + "% uploaded (" + String(readableBytes(evt.loaded)) + ")...");
+                                                    }
+                                                }, false);
+                                                return xhr;
+                                            },
+                                            success: function (data) {
+
+                                                // ---------------------------------------------------------------
+                                                // on success, upload the thumbnail
+                                                // ---------------------------------------------------------------
+
+                                                $.ajax({
+                                                    url: "ajaxpro.php",
+                                                    type: "POST",
+                                                    data: {
+                                                        "image": thumb,
+                                                        "filename": filename,
+                                                        "location": "thumb"
+                                                    },
+                                                    xhr: function () {
+                                                        $('#progressBar').attr('value', 0)
+                                                        $('#progress-value').text('');
+
+                                                        var xhr = new window.XMLHttpRequest();
+                                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                            if (evt.lengthComputable) {
+                                                                console.log('Uploaded thumbnail: ' + evt.loaded);
+
+                                                                var percentComplete = (evt.loaded / evt.total) * 100;
+
+                                                                // Upload progress bar visibility code here
+                                                                $('#progressBar').attr('value', Math.round(percentComplete));
+                                                                $('#progress-value').text(Math.round(percentComplete) + "% uploaded (" + String(readableBytes(evt.loaded)) + ")...");
+                                                            }
+                                                        }, false);
+                                                        return xhr;
+                                                    },
+                                                    success: function (data) {
+
+                                                        // ---------------------------------------------------------------
+                                                        // SUCCESS
+                                                        // ---------------------------------------------------------------
+
+                                                        imageUploaded = filename;
+                                                        $('#uploading-progress').hide();
+                                                        $('#uploading-progress-bar').hide();
+                                                        $('#uploading-sucess').show();
+
+                                                        // enable the file-upload-button and file input box
+                                                        $('#file-upload-btn').attr('disabled', false);
+                                                        $('#file-upload').attr('disabled', false);
+                                                    }
+                                                });
+                                            },
+                                            fail: function (xhr, textStatus, errorThrown) {
+                                                $('#uploading-progress').hide();
+                                                $('#uploading-progress-bar').hide();
+
+                                                $('#uploading-failed').show();
+
+                                                // enable the file-upload-button and file input box
+                                                $('#file-upload-btn').attr('disabled', false);
+                                                $('#file-upload').attr('disabled', false);
+                                            }
+                                        });
+                                        // ---------------------------------------------------------------
+                                    }
+
+                                }, MIME_TYPE, quality);
+                            };
+                        };
+                    }, "image/png", 0.2);
+                }
             });
         } else {
             alert('Please select a new image.')
