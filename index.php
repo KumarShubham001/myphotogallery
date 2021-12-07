@@ -47,10 +47,8 @@ if (is_dir($dir)) {
         </div>
 
         <!-- directional keys -->
-        <span onclick="previousImage(1)" class="slideshow-direction slideshow-direction-left"><i
-                class="fa fa-angle-left"></i></span>
-        <span onclick="nextImage(1)" class="slideshow-direction slideshow-direction-right"><i
-                class="fa fa-angle-right"></i></span>
+        <span onclick="previousImage(1)" class="slideshow-direction slideshow-direction-left"><i class="fa fa-angle-left"></i></span>
+        <span onclick="nextImage(1)" class="slideshow-direction slideshow-direction-right"><i class="fa fa-angle-right"></i></span>
     </div>
 
     <!-- nav bar -->
@@ -72,7 +70,7 @@ if (is_dir($dir)) {
     <!-- flexbox for image gallery -->
     <section id="flexbox-gallery">
 
-        <!-- gallery images will be niserted inside div#galleryList -->
+        <!-- gallery images will be inserted inside div#galleryList -->
         <div class="flexbox" id="galleryList"></div>
 
         <!-- Error if images are not present -->
@@ -108,9 +106,9 @@ if (is_dir($dir)) {
 
     <!-- init the carousel -->
     <script>
-    var arr = <?php echo json_encode($imageList); ?>;
-    initImageArr([...arr]);
-    loadImages();
+        var arr = <?php echo json_encode($imageList); ?>;
+        initImageArr([...arr]);
+        loadImages();
     </script>
 
     <div style="display:none!important">

@@ -137,8 +137,10 @@ body {
 }
 
 .overlay-img {
-    max-height: 100vh;
-    max-width: 100vw;
+    padding: 10px;
+    background: white;
+    max-height: calc(100vh - 20px);
+    max-width: calc(100vw - 20px);
 }
 
 .slash {
@@ -397,16 +399,23 @@ section#intro {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    background: white;
+    /* Added new */
+    padding: 5px;
+    /* Added new */
 }
 
 .image-container {
     height: 100%;
     width: 25%;
+    /* 25%; */
     display: flex;
     position: relative;
     background: #fff;
     display: block;
     outline: none;
+    padding: 10px;
+    /* Added new */
 }
 
 .image-container .image {
@@ -434,8 +443,8 @@ section#intro {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
     background: linear-gradient(to left, #554346, #45505b) !important;
 }
 
